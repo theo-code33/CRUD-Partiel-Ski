@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import postService from "../../setup/services/post.service"
+import MainLayout from "../layout/MainLayout"
 
 const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -15,9 +16,11 @@ const Posts = () => {
         fetchPost()
     },[])
     return ( 
+      <MainLayout>
         <section>
             <h1>Page Posts</h1>
         </section>
+      </MainLayout>
      );
 }
  
