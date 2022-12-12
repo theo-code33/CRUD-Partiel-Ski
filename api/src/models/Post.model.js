@@ -11,15 +11,18 @@ const postSchema = new Schema({
     },
     weight: {
         type: Number,
-        required: true
+        required: true,
     },
     size: {
         type: Number,
-        required: true
+        required: true,
+        min: [140, 'Size must be at least 140cm'],
+        max: [190, 'Size must be a maximum of 190cm']
     },
     style: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Freeride', 'Freestyle', 'Piste', 'Polyvalant']
     },
     price: {
         type: Number,
