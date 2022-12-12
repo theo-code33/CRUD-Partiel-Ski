@@ -10,7 +10,7 @@ const commentSchema = new Schema({
         type: String,
         required: true,
     },
-    starts: {
+    stars: {
         type: Number
     },
     createdAt: {
