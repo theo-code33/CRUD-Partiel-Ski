@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const bookingSchema = new Schema({
     telephoneNumber: {
-        type: Number,
+        type: String,
         required: true,
     },
     createdAt: {
