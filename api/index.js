@@ -2,6 +2,7 @@ const connect = require('./config/mongoose.config')
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const cors = require('cors')
 const postRouter = require('./src/routers/post.router')
 const commentRouter = require('./src/routers/comment.router')
 const bookingRouter = require('./src/routers/booking.router')
@@ -10,6 +11,9 @@ connect()
 
 app.use(morgan('dev'))
 app.use(express.json())
+app.use(cors({
+    'Access-Control-Allow-Origin': 'http://localhost:3000'
+}))
 
 app.use('/api', postRouter)
 app.use('/api', commentRouter)
