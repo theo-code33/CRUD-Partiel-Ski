@@ -4,8 +4,8 @@ const PostController = {
     getAll: async (req, res) => {
         try {
             const posts = await Post.find()
-                                    .populate('Comment')
-                                    .populate('Booking')
+                                    .populate('comments')
+                                    .populate('bookings')
             if(posts.length <= 0) return res.status(404).send('Posts not found')
             res.send(posts)
             
@@ -17,8 +17,8 @@ const PostController = {
         const { id } = req.params
         try {
             const post = await Post.findById(id)
-                                    .populate('Comment')
-                                    .populate('Booking')
+                                    .populate('comments')
+                                    .populate('bookings')
             if(!post) return res.status(404).send(`Post with id ${id} not found`)
             res.send(post)
         } catch (error) {
