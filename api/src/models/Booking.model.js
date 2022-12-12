@@ -5,6 +5,7 @@ const bookingSchema = new Schema({
     telephoneNumber: {
         type: String,
         required: true,
+        min: [10, 'Phone number must be at least 10 character long']
     },
     createdAt: {
         type: Date,
