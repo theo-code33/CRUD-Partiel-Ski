@@ -1,10 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import Posts from "../pages/Posts";
+import PostPage from "../pages/PostPage";
+import PostsListingPage from "../pages/PostsListingPage";
 
 const PrimaryRouter = () => {
     return ( 
         <Routes>
-            <Route path="/" element={<Posts />}/>
+            <Route path="/" element={<PostsListingPage />}/>
+            <Route path="/post/:id" element={<PostPage />}/>
         </Routes>
      );
 }
