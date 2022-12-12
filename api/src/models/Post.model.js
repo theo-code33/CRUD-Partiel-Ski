@@ -43,7 +43,7 @@ const postSchema = new Schema({
             ref: 'Comment'
         }
     ],
-    booking: [
+    bookings: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Booking'
