@@ -1,10 +1,12 @@
 import './style/main.scss';
+import { BrowserRouter } from 'react-router-dom';
+import PrimaryRouter from './app/router/PrimaryRouter';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello New App Partiel</h1>
-    </div>
+    <BrowserRouter>
+      <PrimaryRouter />
+    </BrowserRouter>
   );
 }
 
