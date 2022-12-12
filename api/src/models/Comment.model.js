@@ -11,7 +11,10 @@ const commentSchema = new Schema({
         required: true,
     },
     stars: {
-        type: Number
+        type: Number,
+        required: true,
+        min: [0, 'Stars must be at least 1 star'],
+        max: [5, 'Stars must be a maximum of 5 stars']
     },
     createdAt: {
         type: Date,
