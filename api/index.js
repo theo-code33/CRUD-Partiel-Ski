@@ -1,8 +1,11 @@
 const connect = require('./config/mongoose.config')
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 connect()
+
+app.use(morgan('dev'))
 
 const PORT = process.env.PORT || 8080
 
