@@ -5,7 +5,7 @@ const BookingController = {
     getAll: async (req, res) => {
         try {
             const bookings = await Booking.find()
-                                    .populate('Post')
+                                    .populate('post')
             if(bookings.length <= 0) return res.status(404).send('Bookings not found')
             res.send(bookings)
         } catch (error) {
@@ -16,7 +16,7 @@ const BookingController = {
         const { id } = req.params
         try {
             const booking = await Booking.findById(id)
-                                            .populate('Post')
+                                            .populate('post')
             if(!booking) return res.status(404).send(`Booking with id ${id} not found`)
             res.send(booking)
         } catch (error) {
