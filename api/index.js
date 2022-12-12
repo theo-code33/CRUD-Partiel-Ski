@@ -11,9 +11,7 @@ connect()
 
 app.use(morgan('dev'))
 app.use(express.json())
-app.use(cors({
-    'Access-Control-Allow-Origin': 'http://localhost:3000'
-}))
+app.use(cors())
 
 app.use('/api', postRouter)
 app.use('/api', commentRouter)
