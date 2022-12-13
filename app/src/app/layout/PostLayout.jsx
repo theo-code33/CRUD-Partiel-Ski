@@ -2,16 +2,16 @@ import { Button } from "@mui/material";
 import BookingForm from "../components/booking/BookingForm";
 import CommentForm from "../components/comment/CommentForm";
 
-const PostLayout = ({children}) => {
+const PostLayout = ({children, postId}) => {
     return ( 
         <section className="post-layout">
             <Button variant="contained" href="/">Retour</Button>
             <div className="left-side">
                 {children}
-                <CommentForm />
+                <CommentForm postId={postId}/>
             </div>
             <div className="right-side">
-                <BookingForm />
+                <BookingForm postId={postId}/>
             </div>
         </section>
      );
