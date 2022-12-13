@@ -32,6 +32,10 @@ const postSchema = new Schema({
         type: String,
         required: true
     },
+    address: {
+        type: String,
+        required: true
+    },
     isAvailable: {
         type: Boolean,
         default: true
