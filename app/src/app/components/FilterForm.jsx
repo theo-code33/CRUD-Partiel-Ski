@@ -1,3 +1,5 @@
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+
 const FilterForm = ({setPostsFiltered, posts}) => {
     const handleFilter = (e) => {
         const { name, value } = e.target
@@ -27,6 +29,10 @@ const FilterForm = ({setPostsFiltered, posts}) => {
         }
         setPostsFiltered(result)
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
     const createOptionSize = () => {
         const minSize = 140
         const maxSize = 190
@@ -38,29 +44,57 @@ const FilterForm = ({setPostsFiltered, posts}) => {
             index += step
         } while (index <= maxSize);
         return options.map((option) => (
-            <option key={option} value={option}>{option}</option>
+            <MenuItem key={option} value={option}>{option}</MenuItem>
         ))
     }
     return ( 
-        <form>
-            <input type="text" name="search" id="search" placeholder="Rechercher par adresse" onInput={handleFilter}/>
-            <select name="weight" id="weight" defaultValue="" onChange={handleFilter} >
-                <option value="">Rechercher par Poids</option>
-                <option value="0-45">Moins de 45kg</option>
-                <option value="45-65">Entre 45kg et 65kg</option>
-                <option value="65+">Plus de 65kg</option>
-            </select>
-            <select name="style" id="style" defaultValue="" onChange={handleFilter}>
-                <option value="">Rechercher par Style</option>
-                <option value="Freeride">Freeride</option>
-                <option value="Freestyle">Freestyle</option>
-                <option value="Piste">Piste</option>
-                <option value="Polyvalent">Polyvalent</option>
-            </select>
-            <select name="size" id="size" defaultValue="" onChange={handleFilter}>
-                <option value="">Rechercher par Taille</option>
-                {createOptionSize()}
-            </select>
+        <form onSubmit={handleSubmit} className="filter-form">
+            <span>Filter par :</span>
+            <TextField variant="outlined" name="search" id="search" label="Rechercher par adresse" onInput={handleFilter} sx={{width: "20%"}}/>
+            <FormControl sx={{width: "20%"}}>
+                <InputLabel id="weight-label">Rechercher par Poids</InputLabel>
+                <Select
+                    labelId="weight-label"
+                    id="weight"
+                    name="weight"
+                    label="Rechercher par Poids"
+                    onChange={handleFilter}
+                >
+                    <MenuItem value="">Rechercher par Poids</MenuItem>
+                    <MenuItem value="0-45">Moins de 45kg</MenuItem>
+                    <MenuItem value="45-65">Entre 45kg et 65kg</MenuItem>
+                    <MenuItem value="65+">Plus de 65kg</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl sx={{width: "20%"}}>
+                <InputLabel id="style-label">Rechercher par Style</InputLabel>
+                <Select
+                    labelId="style-label"
+                    id="style"
+                    name="style"
+                    label="Rechercher par Style"
+                    onChange={handleFilter}
+                >
+                    <MenuItem value="">Rechercher par Style</MenuItem>
+                    <MenuItem value="Freeride">Freeride</MenuItem>
+                    <MenuItem value="Freestyle">Freestyle</MenuItem>
+                    <MenuItem value="Piste">Piste</MenuItem>
+                    <MenuItem value="Polyvalent">Polyvalent</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl sx={{width: "20%"}}>
+                <InputLabel id="size-label">Rechercher par Taille</InputLabel>
+                <Select
+                    labelId="size-label"
+                    id="size"
+                    name="size"
+                    label="Rechercher par Taille"
+                    onChange={handleFilter}
+                >
+                    <MenuItem value="">Rechercher par Taille</MenuItem>
+                    {createOptionSize()}
+                </Select>
+            </FormControl>
         </form>
      );
 }
