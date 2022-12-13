@@ -31,6 +31,7 @@ const BookingController = {
         if(!post) return res.status(404).send('Post not found')
         try {
             post.bookings.push(newBooking._id)
+            post.isAvailable = false
             await post.save()
             await newBooking.save()
             res.status(201).send(newBooking)
