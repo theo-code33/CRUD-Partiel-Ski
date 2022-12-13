@@ -1,9 +1,9 @@
 import FilterForm from "../components/FilterForm";
 
-const MainLayout = ({children}) => {
+const MainLayout = ({children, setPostsFiltered, posts}) => {
     return ( 
         <>
-        <FilterForm />
+        <FilterForm setPostsFiltered={setPostsFiltered} posts={posts}/>
         {children}
         </>
      );
