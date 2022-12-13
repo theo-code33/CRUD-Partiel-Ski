@@ -7,7 +7,7 @@ const CommentForm = ({postId, setComments}) => {
         post: postId,
         username: '',
         description: '',
-        stars: 0
+        stars: ''
     })
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -26,30 +26,32 @@ const CommentForm = ({postId, setComments}) => {
                 post: postId,
                 username: '',
                 description: '',
-                stars: '0'
+                stars: ''
             })
         } catch (error) {
             console.log(error);
         }
     }
     return ( 
-        <div>
-            <form onSubmit={handleSubmit}>
-                <Rating name="stars" id="stars" onInput={handleChange} />
-                <TextField name="username" id="username" variant="outlined" value={credentials.username} label="Votre Nom" onInput={handleChange} />
-                <TextField 
-                    name="description"
-                    id="description"
-                    multiline 
-                    rows={6} 
-                    variant="outlined"
-                    label="Votre commentaire"
-                    value={credentials.description}
-                    onInput={handleChange} 
-                />
-                <Button type="submit" variant="contained">Ajouter un commentaire</Button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit} className="comment-form">
+            <Rating name="stars" id="stars" onInput={handleChange} size="large" required/>
+            <TextField name="username" id="username" variant="outlined" value={credentials.username} label="Votre Nom" onInput={handleChange} required />
+            <TextField 
+                name="description"
+                id="description"
+                multiline 
+                rows={6} 
+                variant="outlined"
+                label="Votre commentaire"
+                value={credentials.description}
+                onInput={handleChange} 
+                required
+            />
+            {credentials.stars === '' 
+                ? <Button type="submit" variant="contained" disabled>Ajouter un commentaire</Button>
+                : <Button type="submit" variant="contained">Ajouter un commentaire</Button>
+            }
+        </form>
      );
 }
  
