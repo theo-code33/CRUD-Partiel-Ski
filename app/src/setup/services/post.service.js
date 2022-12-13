@@ -1,6 +1,6 @@
 import instance from "./api.service";
 
-const END_POINT = '/posts'
+const END_POINT = "/posts"
 
 const getAll = async () => {
     const response = await instance.get(END_POINT)
