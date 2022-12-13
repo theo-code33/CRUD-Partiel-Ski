@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import postService from "../../setup/services/post.service";
+import PostInformations from "../components/PostInformations";
+import PostLayout from "../layout/PostLayout";
 
 const PostPage = () => {
-    const [post, setPost] = useState([])
     const { id } = useParams()
+    const [post, setPost] = useState(null)
     const fetchPost = async () => {
         try {
             const response = await postService.getOneById(id)
@@ -18,7 +20,11 @@ const PostPage = () => {
     }, [])
     return ( 
         <div>
-            <h1>Post with id {id}</h1>
+            {post && 
+                <PostLayout>
+                    <PostInformations post={post}/>
+                </PostLayout>
+            }
         </div>
      );
 }
