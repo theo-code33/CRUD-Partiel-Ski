@@ -26,9 +26,11 @@ const Posts = () => {
             <h1>Page Posts</h1>
             {
               postsFiltered.length > 0 
-              ? postsFiltered.map((post) => (
-                <PostItem key={post._id} post={post} />
-              )) 
+              ? postsFiltered.map((post) => {
+                if(post.isAvailable === true){
+                  return <PostItem key={post._id} post={post} />
+                }
+              }) 
               : <span>Désolé votre recherche ne correspond avec aucune annonces</span>
             }
         </section>
