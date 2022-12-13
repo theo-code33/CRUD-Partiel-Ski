@@ -1,5 +1,6 @@
 import { Rating } from "@mui/material";
 import { useEffect, useState } from "react";
+import PostMainContent from "./PostMainContent";
 
 const PostInformations = ({post}) => {
 
@@ -27,6 +28,8 @@ const PostInformations = ({post}) => {
             </div>
             <div className="content-post">
                 <Rating name="read-only" value={ratingPost} readOnly />
+                <PostMainContent post={post}/>
+                <p>{post.description}</p>
             </div>
         </div>
      );
