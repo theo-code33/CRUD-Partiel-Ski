@@ -7,6 +7,7 @@ const BookingForm = ({postId}) => {
         post: postId,
         telephoneNumber: ''
     })
+    const [isAvailable, setIsAvailable] = useState(true)
     const handleChange = (e) => {
         const { name, value } = e.target
         setCredentials({
@@ -17,20 +18,30 @@ const BookingForm = ({postId}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await bookingsService.create(credentials)
-            console.log(response);
+            await bookingsService.create(credentials)
+            setIsAvailable(false)
+            setCredentials({
+                post: postId,
+                telephoneNumber: ''
+            })
         } catch (error) {
             console.log(error);
         }
     }
 
     return ( 
-        <div>
-            <form onSubmit={handleSubmit}>
-                <TextField id="telephoneNumber" name="telephoneNumber" label="Numéro de téléphone" variant="outlined" onInput={handleChange}/>
-                <Button type="submit" variant="contained">Réserver</Button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <div>
+                <h2>Réserver cet location ?</h2>
+                <span>Vous pouvez réserver cet location avec simplement votre numéro de téléphone</span>
+            </div>
+            <TextField id="telephoneNumber" name="telephoneNumber" label="Numéro de téléphone" variant="outlined" value={credentials.telephoneNumber} onInput={handleChange} inputProps={{minLength: 10}} required/>
+            {isAvailable 
+            ? <Button type="submit" variant="contained">Réserver</Button>
+            : <Button type="submit" variant="contained" disabled>Réserver</Button>
+            }
+            
+        </form>
      );
 }
  
