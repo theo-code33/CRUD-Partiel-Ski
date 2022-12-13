@@ -1,11 +1,8 @@
 import { Rating } from "@mui/material";
 import { useEffect, useState } from "react";
 
-const CommentsListing = ({postComments}) => {
-    const [comments, setComments] = useState(null)
-    useEffect(() => {
-        setComments([...postComments])
-    }, [])
+const CommentsListing = ({comments}) => {
+    
     return ( 
         <>
             {comments && comments.map((comment) => (

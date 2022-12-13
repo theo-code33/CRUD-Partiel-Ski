@@ -2,7 +2,7 @@ import { Button, Rating, TextField } from "@mui/material";
 import { useState } from "react";
 import commentsService from "../../../setup/services/comment.service";
 
-const CommentForm = ({postId}) => {
+const CommentForm = ({postId, setComments}) => {
     const [credentials, setCredentials] = useState({
         post: postId,
         username: '',
@@ -20,7 +20,14 @@ const CommentForm = ({postId}) => {
         e.preventDefault()
         try {
             const response = await commentsService.create(credentials)
-            console.log(response);
+            setComments((comments) => [...comments, response])
+
+            setCredentials({
+                post: postId,
+                username: '',
+                description: '',
+                stars: '0'
+            })
         } catch (error) {
             console.log(error);
         }
@@ -29,7 +36,7 @@ const CommentForm = ({postId}) => {
         <div>
             <form onSubmit={handleSubmit}>
                 <Rating name="stars" id="stars" onInput={handleChange} />
-                <TextField name="username" id="username" variant="outlined" label="Votre Nom" onInput={handleChange} />
+                <TextField name="username" id="username" variant="outlined" value={credentials.username} label="Votre Nom" onInput={handleChange} />
                 <TextField 
                     name="description"
                     id="description"
@@ -37,6 +44,7 @@ const CommentForm = ({postId}) => {
                     rows={6} 
                     variant="outlined"
                     label="Votre commentaire"
+                    value={credentials.description}
                     onInput={handleChange} 
                 />
                 <Button type="submit" variant="contained">Ajouter un commentaire</Button>
