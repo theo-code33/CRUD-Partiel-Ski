@@ -27,7 +27,7 @@ const PostInformations = ({post}) => {
                 <img src={post.imgUrl ? post.imgUrl : '/skiing-with-a-view-over-the-mountains.jpg'} alt={`Image du post ${post.title}`} />
             </div>
             <div className="content-post">
-                <Rating name="read-only" value={ratingPost} readOnly />
+                <Rating name="rating" value={ratingPost} readOnly />
                 <PostMainContent post={post}/>
                 <p>{post.description}</p>
             </div>

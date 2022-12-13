@@ -21,7 +21,7 @@ const PostPage = () => {
     return ( 
         <div>
             {post && 
-                <PostLayout postId={id}>
+                <PostLayout post={post}>
                     <PostInformations post={post}/>
                 </PostLayout>
             }
