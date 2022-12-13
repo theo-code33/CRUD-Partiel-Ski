@@ -1,4 +1,11 @@
-const FilterForm = () => {
+import { useState } from "react"
+
+const FilterForm = ({setPostsFiltered, posts}) => {
+    const handleFilter = (e) => {
+        const { name, value } = e.target
+        const result = value ? posts.filter((post) => post.address.toLowerCase().includes(value.toLowerCase())) : posts
+        setPostsFiltered(result)
+    }
     const createOptionSize = () => {
         const options = []
         const minSize = 140
@@ -15,7 +22,7 @@ const FilterForm = () => {
     }
     return ( 
         <form>
-            <input type="text" name="search" id="search" placeholder="Rechercher par adresse" />
+            <input type="text" name="search" id="search" placeholder="Rechercher par adresse" onInput={handleFilter}/>
             <select name="weight" id="weight" defaultValue="" >
                 <option value="" disabled>Rechercher par Poids</option>
                 <option value="0-45">Moins de 45kg</option>
