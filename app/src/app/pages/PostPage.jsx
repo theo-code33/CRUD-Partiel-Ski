@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import postService from "../../setup/services/post.service";
-import PostInformations from "../components/PostInformations";
+import PostInformations from "../components/post/PostInformations";
 import PostLayout from "../layout/PostLayout";
 
 const PostPage = () => {

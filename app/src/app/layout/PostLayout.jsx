@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
-import BookingForm from "../components/BookingForm";
-import CommentForm from "../components/CommentForm";
+import BookingForm from "../components/booking/BookingForm";
+import CommentForm from "../components/comment/CommentForm";
 
 const PostLayout = ({children}) => {
     return ( 

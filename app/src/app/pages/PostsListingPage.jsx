@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import postService from "../../setup/services/post.service"
-import PostItem from "../components/PostItem"
+import PostItem from "../components/post/PostItem"
 import MainLayout from "../layout/MainLayout"
 
 const Posts = () => {
