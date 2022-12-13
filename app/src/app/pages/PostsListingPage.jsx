@@ -20,10 +20,9 @@ const Posts = () => {
     useEffect(() => {
       setPostsFiltered([...posts])
     },[posts])
-    return ( 
+    return (
       <MainLayout setPostsFiltered={setPostsFiltered} posts={posts}>
         <section>
-            <h1>Page Posts</h1>
             {
               postsFiltered.length > 0 
               ? postsFiltered.map((post) => {
