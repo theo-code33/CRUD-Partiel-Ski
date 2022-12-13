@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PostMainContent from "./PostMainContent";
 
 const PostItem = ({post}) => {
     return ( 
@@ -7,14 +8,7 @@ const PostItem = ({post}) => {
                 <div className="image-container">
                     <img src={post.imgUrl ? post.imgUrl : '/skiing-with-a-view-over-the-mountains.jpg'} alt={`Image du post ${post.title}`} />
                 </div>
-                <div className="content-post">
-                    <h2>{post.title}</h2>
-                    <div>
-                        <span>{post.price}€ / j</span>
-                        <span>{post.size} cm</span>
-                    </div>
-                    <p>{post.address}</p>
-                </div>
+                <PostMainContent post={post}/>
             </Link>
         </div>
      );
