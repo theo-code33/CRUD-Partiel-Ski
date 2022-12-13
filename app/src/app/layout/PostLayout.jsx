@@ -11,8 +11,8 @@ const PostLayout = ({children, post}) => {
     }, [])
     return ( 
         <section className="post-layout">
-            <Button variant="contained" href="/">Retour</Button>
             <div className="left-side">
+                <Button className="back-button" variant="contained" href="/">Retour</Button>
                 {children}
                 <CommentForm postId={post._id} setComments={setComments}/>
                 <CommentsListing comments={comments}/>

@@ -22,11 +22,11 @@ const PostInformations = ({post}) => {
     },[])
 
     return ( 
-        <div>
+        <div className="container-content-post">
             <div className="img-container">
                 <img src={post.imgUrl ? post.imgUrl : '/skiing-with-a-view-over-the-mountains.jpg'} alt={`Image du post ${post.title}`} />
             </div>
-            <div className="content-post">
+            <div className="post-content">
                 <Rating name="rating" value={ratingPost} readOnly />
                 <PostMainContent post={post}/>
                 <p>{post.description}</p>
