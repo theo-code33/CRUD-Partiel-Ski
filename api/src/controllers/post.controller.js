@@ -1,5 +1,7 @@
 const Post = require('../models/Post.model')
 const Shop = require('../models/Shop.model')
+const Booking = require('../models/Booking.model')
+const Comment = require('../models/Comment.model')
 
 const PostController = {
     getAll: async (req, res) => {
@@ -23,6 +25,18 @@ const PostController = {
             if(!post) return res.status(404).send(`Post with id ${id} not found`)
             res.send(post)
         } catch (error) {
+            res.status(400).send({message: error.message})
+        }
+    },
+    getByShop: async (req, res) => {
+        const { id } = req.params
+        try{
+            const posts = await Post.find({shop: id})
+                                    .populate('comments')
+                                    .populate('bookings')
+            if(posts.length <= 0) return res.status(404).send(`Posts with shop id ${id} not found`)
+            res.send(posts)
+        }catch(error){
             res.status(400).send({message: error.message})
         }
     },
@@ -56,6 +70,9 @@ const PostController = {
         const { id } = req.params
         try {
             const deletedPost = await Post.findByIdAndDelete(id)
+            await Shop.updateMany({}, {$pull: {posts: id}})
+            await Comment.deleteMany({post: id})
+            await Booking.deleteMany({post: id})
             if(!deletedPost) return res.status(404).send(`Post with id ${id} not found`)
             res.send(deletedPost)
         } catch (error) {
