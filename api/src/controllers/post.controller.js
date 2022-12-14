@@ -1,4 +1,5 @@
 const Post = require('../models/Post.model')
+const Shop = require('../models/Shop.model')
 
 const PostController = {
     getAll: async (req, res) => {
@@ -26,8 +27,14 @@ const PostController = {
         }
     },
     create: async (req, res) => {
-        const newPost = new Post(req.body)
+        const data = req.body
+        const newPost = new Post(data)
+
+        const shop = await Shop.findById(data.shop)
+        if(!shop) return res.status(404).send('Shop not found')
         try {
+            shop.posts.push(newPost._id)
+            await shop.save()
             await newPost.save()
             res.status(201).send(newPost)
         } catch (error) {
