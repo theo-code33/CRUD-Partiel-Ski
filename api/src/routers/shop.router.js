@@ -5,7 +5,7 @@ const router = express.Router()
 const endPoint = '/shops'
 
 router.get(`${endPoint}`, ShopController.getAll)
-router.get(`${endPoint}/connect`, ShopController.getAllToConnect)
+router.post(`${endPoint}/connect`, ShopController.getOne)
 router.get(`${endPoint}/:id`, ShopController.getById)
 router.post(`${endPoint}`, ShopController.create)
 router.put(`${endPoint}/:id`, ShopController.update)
