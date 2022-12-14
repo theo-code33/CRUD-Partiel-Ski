@@ -6,6 +6,7 @@ const cors = require('cors')
 const postRouter = require('./src/routers/post.router')
 const commentRouter = require('./src/routers/comment.router')
 const bookingRouter = require('./src/routers/booking.router')
+const shopRouter = require('./src/routers/shop.router')
 
 connect()
 
@@ -16,6 +17,7 @@ app.use(cors())
 app.use('/api', postRouter)
 app.use('/api', commentRouter)
 app.use('/api', bookingRouter)
+app.use('/api', shopRouter)
 
 const PORT = process.env.PORT || 8080
 
