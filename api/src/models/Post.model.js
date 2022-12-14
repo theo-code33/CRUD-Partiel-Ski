@@ -44,6 +44,11 @@ const postSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    shop: {
+        type: Schema.Types.ObjectId,
+        ref: 'Shop',
+        required: true
+    },
     comments: [
         {
             type: Schema.Types.ObjectId,
