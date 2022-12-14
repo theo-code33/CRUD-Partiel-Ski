@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import postService from "../../setup/services/post.service"
-import PostItem from "../components/post/PostItem"
-import MainLayout from "../layout/MainLayout"
+import postService from "../../../setup/services/post.service"
+import PostItem from "../../components/post/PostItem"
+import MainLayout from "../../layout/MainLayout"
 
 const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -30,7 +30,7 @@ const Posts = () => {
                   return <PostItem key={post._id} post={post} />
                 }
               }) 
-              : <span>Désolé votre recherche ne correspond avec aucune annonces</span>
+              : <span className="error-listing">Désolé votre recherche ne correspond a aucune annonces</span>
             }
         </section>
       </MainLayout>
