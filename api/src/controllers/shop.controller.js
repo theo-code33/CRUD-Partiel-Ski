@@ -14,12 +14,12 @@ const ShopController = {
             res.status(400).send({message: error.message})
         }
     },
-    getAllToConnect: async (req, res) => {
+    getOne: async (req, res) => {
+        const {email, password} = req.body
         try {
-            const shops = await Shop.find()
-                                .select('email password')
-            if(shops.length <= 0) return res.status(404).send('Shops not found')
-            res.send(shops)
+            const shop = await Shop.find({email: email, password: password})
+            if(!shop) return res.status(404).send('Shop not found')
+            res.send(shop)
         } catch (error) {
             res.status(400).send({message: error.message})
         }
