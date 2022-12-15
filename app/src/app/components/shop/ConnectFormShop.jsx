@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import shopService from "../../../setup/services/shop.service";
 
-const ConnectFormShop = ({shops}) => {
+const ConnectFormShop = ({setShopID}) => {
     const [showPassword, setShowPassword] = useState(false)
     const [credentials, setCredentials] = useState({})
     const [error, setError] = useState(false)
@@ -26,7 +26,8 @@ const ConnectFormShop = ({shops}) => {
                 setError(true)
                 return
             }else{
-                window.localStorage.setItem('isConnected', true)
+                window.localStorage.setItem('shopID', shop[0]._id)
+                setShopID(shop[0]._id)
                 navigate(`/shop/${shop[0]._id}`)
             }
         } catch (error) {
@@ -41,8 +42,8 @@ const ConnectFormShop = ({shops}) => {
     };
     return ( 
         <form className="form-connect" onSubmit={handleSubmit}>
-            <TextField name="email" id="email" type="email" variant="outlined" label="Email" autoComplete="email" sx={{ m: 1, width: '20%' }} onInput={handleChange} required/>
-            <FormControl sx={{ m: 1, width: '20%' }} variant="outlined">
+            <TextField name="email" id="email" type="email" variant="outlined" label="Email" autoComplete="email" sx={{ width: '100%' }} onInput={handleChange} required/>
+            <FormControl sx={{ width: '100%' }} variant="outlined">
                 <InputLabel htmlFor="password">Mot de passe</InputLabel>
                 <OutlinedInput
                     id="password"
@@ -66,10 +67,10 @@ const ConnectFormShop = ({shops}) => {
                     label="Mot de passe"
                 />
             </FormControl>
-            <Button type="submit" variant="contained">Connexion</Button>
             {error && 
-                <span>Il y a une erreur</span>
+                <span className="error-connexion">Il y a une erreur. Veuillez vérifier que votre Email et votre Mot de Passe soient les bons</span>
             }
+            <Button type="submit" variant="contained">Connexion</Button>
         </form>
      );
 }
