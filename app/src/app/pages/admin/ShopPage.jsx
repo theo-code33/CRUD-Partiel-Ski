@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import shopService from "../../../setup/services/shop.service";
 import HeaderShop from "../../components/shop/HeaderShop";
@@ -20,6 +21,7 @@ const ShopPage = ({shopID}) => {
     },[])
     return ( 
         <ShopLayout>
+            <Button href="/" className="return-button" variant="contained">Retour aux locations</Button>
             {shop &&
                 <>
                     <HeaderShop shop={shop}/>
