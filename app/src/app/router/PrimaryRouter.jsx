@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import BookingsPage from "../pages/admin/BookingsPage";
 import ConnectPage from "../pages/admin/ConnectPage";
 import CreatePostPage from "../pages/admin/CreatePostPage";
 import ParameterPage from "../pages/admin/ParameterPage";
@@ -27,6 +28,7 @@ const PrimaryRouter = () => {
                     <Route path={`/shop/${shopID}/parametres`} element={<ParameterPage shopID={shopID} />} />
                     <Route path='/post/update/:id' element={<UpdatePost shopID={shopID} />}/>
                     <Route path='/post/create' element={<CreatePostPage shopID={shopID} />}/>
+                    <Route path={`${shopID}/reservations`} element={<BookingsPage shopID={shopID}/>}/>
                 </>
             )
             }
