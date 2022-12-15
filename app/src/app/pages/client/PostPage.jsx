@@ -7,6 +7,7 @@ import PostLayout from "../../layout/PostLayout";
 const PostPage = () => {
     const { id } = useParams()
     const [post, setPost] = useState(null)
+    const [commentRating, setCommentRating] = useState([])
     const fetchPost = async () => {
         try {
             const response = await postService.getOneById(id)
@@ -15,14 +16,39 @@ const PostPage = () => {
             console.log(error);
         }
     }
+    const [ratingPost, setRatingPost] = useState(0)
+
+    const calculateRating = () => {
+        let ratingTotal = 0
+        commentRating.forEach((rating) => {
+            ratingTotal += +rating
+            console.log(ratingTotal);
+        })
+        const rating = ratingTotal / commentRating.length
+        return rating
+    }
+
     useEffect(() => {
         fetchPost()
     }, [])
+    useEffect(() => {
+        if(post){
+            post.comments?.forEach((comment) => {
+                setCommentRating(rating =>[...rating, comment.stars])
+            })
+        }
+    }, [post])
+    useEffect(() => {
+        if(commentRating.length > 0){
+            const rating = calculateRating()
+            setRatingPost(rating)
+        }
+    }, [commentRating])
     return ( 
         <div>
             {post && 
-                <PostLayout post={post}>
-                    <PostInformations post={post}/>
+                <PostLayout post={post} setCommentRating={setCommentRating}>
+                    <PostInformations post={post} ratingPost={ratingPost}/>
                 </PostLayout>
             }
         </div>

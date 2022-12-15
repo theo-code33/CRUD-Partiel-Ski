@@ -2,7 +2,7 @@ import { Button, Rating, TextField } from "@mui/material";
 import { useState } from "react";
 import commentsService from "../../../setup/services/comment.service";
 
-const CommentForm = ({postId, setComments}) => {
+const CommentForm = ({postId, setComments, setCommentRating}) => {
     const [credentials, setCredentials] = useState({
         post: postId,
         username: '',
@@ -21,7 +21,7 @@ const CommentForm = ({postId, setComments}) => {
         try {
             const response = await commentsService.create(credentials)
             setComments((comments) => [...comments, response])
-
+            setCommentRating((commentRating) => [...commentRating, credentials.stars])
             setCredentials({
                 post: postId,
                 username: '',
