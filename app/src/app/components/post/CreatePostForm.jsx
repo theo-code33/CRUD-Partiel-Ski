@@ -63,8 +63,8 @@ const CreatePostForm = ({shopID}) => {
             }
             <TextField name="imgUrl" id="imgUrl" type="file" variant="outlined" sx={{ width: '100%' }} onInput={handleChange}/>
             <TextField name="description" id="description" type="text" variant="outlined" value={credentials.description} label="Description" sx={{ width: '100%' }} required onInput={handleChange}/>
-            <TextField name="weight" id="weight" type="number" variant="outlined" value={credentials.weight} label="Poids" sx={{ width: '100%' }}  required onInput={handleChange}/>
-            <TextField name="size" id="size" type="number" variant="outlined" value={credentials.size} label="Taille" sx={{ width: '100%' }} required inputProps={{min: minSize, max: maxSize}} onInput={handleChange}/>
+            <TextField name="weight" id="weight" type="number" variant="outlined" value={credentials.weight} label="Poids" inputProps={{min: 0}} sx={{ width: '100%' }}  required onInput={handleChange}/>
+            <TextField name="size" id="size" type="number" variant="outlined" value={credentials.size} label="Taille" sx={{ width: '100%' }} required inputProps={{min: minSize, max: maxSize, step: 5}} onInput={handleChange}/>
             <FormControl fullWidth required>
                 <InputLabel id="style-label-select">Style</InputLabel>
                 <Select 
@@ -84,7 +84,7 @@ const CreatePostForm = ({shopID}) => {
                 </Select>
             </FormControl>
             <TextField name="address" id="address" type="text" variant="outlined" value={credentials.address} label="Adresse" sx={{ width: '100%' }} required onInput={handleChange}/>
-            <TextField name="price" id="price" type="number" variant="outlined" value={credentials.price} label="Prix" sx={{ width: '100%' }} inputProps={{pattern: "[0-9]+([\.,][0-9]+)?", step:"0.01"}} required onInput={handleChange}/>
+            <TextField name="price" id="price" type="number" variant="outlined" value={credentials.price} label="Prix" sx={{ width: '100%' }} inputProps={{pattern: "[0-9]+([\.,][0-9]+)?", step:"0.01", min: 0}} required onInput={handleChange}/>
             <Button type="submit" variant="contained" sx={{mt: 2}}>Créer</Button>
             {error && <span className="error-fom">Une Erreur est survenue. Veuillez réessayer ultérieument</span>}
         </form>
