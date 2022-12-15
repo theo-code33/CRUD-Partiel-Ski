@@ -21,7 +21,8 @@ const shopSchema = new Schema({
         minLength: [6, 'Password must be at least 6 character long']
     },
     logoUrl: {
-        type: String
+        type: String,
+        default: 'https://www.w3schools.com/howto/img_avatar.png'
     },
     posts: [
         {
