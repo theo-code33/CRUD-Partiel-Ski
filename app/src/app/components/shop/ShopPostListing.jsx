@@ -50,6 +50,7 @@ const ShopPostListing = ({shopPosts, fetchShopData, shopID}) => {
             }}
         >
             <Button href='/post/create' variant='contained' sx={{mb: 2}}>Nouvelle location</Button>
+            <Button href={`/${shopID}/reservations`} variant='contained' sx={{mb: 2, ml: 2}}>Réservations</Button>
             <DataGrid
             rows={shopPosts}
             columns={columns}
