@@ -7,7 +7,8 @@ const postSchema = new Schema({
         required: true
     },
     imgUrl: {
-        type: String
+        type: String,
+        default: 'https://media.istockphoto.com/id/149396055/fr/photo/paire-de-skis-de-fond.jpg?s=612x612&w=0&k=20&c=KskahcAlZZZ2BvCW0ugyWRYzHu4XAQGCvVBdq1Y80wI='
     },
     weight: {
         type: Number,
