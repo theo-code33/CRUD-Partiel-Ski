@@ -6,19 +6,21 @@ import PostPage from "../pages/client/PostPage";
 import PostsListingPage from "../pages/client/PostsListingPage";
 
 const PrimaryRouter = () => {
-    const [isConnected, setIsConnected] = useState('')
+    const [shopID, setShopID] = useState('')
     useEffect(() => {
-        const isConnectedLocalStorage = window.localStorage.getItem('isConnected')
-        setIsConnected(isConnectedLocalStorage)
+        const shopIDLocalStorage = window.localStorage.getItem('shopID')
+        setShopID(shopIDLocalStorage)
     }, [])
     return (
         <Routes>
             <Route path="/" element={<PostsListingPage />}/>
+            <Route path="/*" element={<PostsListingPage />}/>
             <Route path="/post/:id" element={<PostPage />}/>
-            <Route path="/shop/connect" element={<ConnectPage />} />
-            {isConnected === 'true'
-                ? <Route path="/shop/:id" element={<ShopPage />} />
-                : <Route path="/shop/*" element={<ConnectPage />} />
+            <Route path="/shop/connect" element={<ConnectPage setShopID={setShopID} />} />
+            <Route path="/shop/*" element={<ConnectPage setShopID={setShopID} />} />
+            {shopID != null
+                ? <Route path={`/shop/${shopID}`} element={<ShopPage />} />
+                : null
             }
         </Routes>
      );
