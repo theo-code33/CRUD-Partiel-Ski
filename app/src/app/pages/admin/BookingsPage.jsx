@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import shopService from "../../../setup/services/shop.service";
+import ShopLayout from "../../layout/ShopLayout";
 
 const BookingsPage = ({shopID}) => {
     const [bookings, setBookings] = useState(null)
@@ -37,11 +38,11 @@ const BookingsPage = ({shopID}) => {
         fetchBookings(shopID)
     },[])
     return ( 
-        <div>
+        <ShopLayout>
+            <Button href={`/shop/${shopID}`} className="return-button" variant='contained' sx={{mb: 2}}>Retour</Button>
             {bookings &&
             <>
-                <h1>Réservations</h1>
-                <Button href={`/shop/${shopID}`} variant='contained' sx={{mb: 2}}>Retour</Button>
+                
                 <Box
                     sx={{
                         height: 400, 
@@ -49,6 +50,7 @@ const BookingsPage = ({shopID}) => {
                         margin: '120px auto 0'
                     }}
                 >
+                    <h1>Réservations</h1>
                     <DataGrid
                         rows={bookings}
                         columns={columns}
@@ -59,7 +61,7 @@ const BookingsPage = ({shopID}) => {
                 </Box>
             </>
             }
-        </div>
+        </ShopLayout>
      );
 }
  
