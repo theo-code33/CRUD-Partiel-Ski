@@ -1,6 +1,7 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, StepLabel, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import checkImage from "../../../setup/functions/checkImage.function";
 import postService from "../../../setup/services/post.service";
 
 const CreatePostForm = ({shopID}) => {
@@ -17,6 +18,7 @@ const CreatePostForm = ({shopID}) => {
         imgUrl: '',
     })
     const [error, setError] = useState(false)
+    const [errorImg, setErrorImg] = useState(false)
 
     const navigate = useNavigate()
 
@@ -26,10 +28,18 @@ const CreatePostForm = ({shopID}) => {
     const handleChange = (e) => {
         const {name, value} = e.target;
         if (name === 'imgUrl') {
-            if(!e.target.files[0]) return;
-            const url = URL.createObjectURL(e.target.files[0])
-            setImagePost(url)
-            setCredentials({...credentials, [name]: url});
+            checkImage(value, (result) => {
+                console.log(result);
+                if(result){
+                    setImagePost(value)
+                    setErrorImg(false)
+                    setCredentials({...credentials, imgUrl: value})
+                }else{
+                    setErrorImg(true)
+                    console.log('error');
+                    return
+                }
+            } )
         }else{
             setCredentials({...credentials, [name]: value});
         }
@@ -53,15 +63,15 @@ const CreatePostForm = ({shopID}) => {
         }
     }
     return ( 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="post-form">
             <TextField name="title" id="title" type="text" variant="outlined" value={credentials.title} label="Titre" sx={{ width: '100%' }} required onInput={handleChange}/>
-            <StepLabel>Image</StepLabel>
             {
                 imagePost 
                 ? <img src={imagePost} alt="preview" style={{width: '50%', height: '500px', objectFit: 'contain'}}/>
                 : <div style={{background: 'grey', width: '50%', height: '500px'}}></div>
             }
-            <TextField name="imgUrl" id="imgUrl" type="file" variant="outlined" sx={{ width: '100%' }} onInput={handleChange}/>
+            <TextField name="imgUrl" id="imgUrl" type="url" label="Image" variant="outlined" sx={{ width: '100%' }} onInput={handleChange}/>
+            {errorImg && <span className="error-fom" style={{width: "100%", color: 'red', fontWeight: 'bold'}}>L'image renseigné n'est pas valide</span>}
             <TextField name="description" id="description" type="text" variant="outlined" value={credentials.description} label="Description" sx={{ width: '100%' }} required onInput={handleChange}/>
             <TextField name="weight" id="weight" type="number" variant="outlined" value={credentials.weight} label="Poids" inputProps={{min: 0}} sx={{ width: '100%' }}  required onInput={handleChange}/>
             <TextField name="size" id="size" type="number" variant="outlined" value={credentials.size} label="Taille" sx={{ width: '100%' }} required inputProps={{min: minSize, max: maxSize, step: 5}} onInput={handleChange}/>
@@ -85,8 +95,11 @@ const CreatePostForm = ({shopID}) => {
             </FormControl>
             <TextField name="address" id="address" type="text" variant="outlined" value={credentials.address} label="Adresse" sx={{ width: '100%' }} required onInput={handleChange}/>
             <TextField name="price" id="price" type="number" variant="outlined" value={credentials.price} label="Prix" sx={{ width: '100%' }} inputProps={{pattern: "[0-9]+([\.,][0-9]+)?", step:"0.01", min: 0}} required onInput={handleChange}/>
-            <Button type="submit" variant="contained" sx={{mt: 2}}>Créer</Button>
-            {error && <span className="error-fom">Une Erreur est survenue. Veuillez réessayer ultérieument</span>}
+            {errorImg 
+            ? <Button type="submit" variant="contained" sx={{mt: 2, width: '100%'}} disabled>Créer</Button>
+            : <Button type="submit" variant="contained" sx={{mt: 2, width: '100%'}}>Créer</Button>
+            }
+            {error && <span className="error-form" style={{color: 'red', fontWeight: 'bold'}}>Une Erreur est survenue. Veuillez réessayer ultérieument</span>}
         </form>
      );
 }

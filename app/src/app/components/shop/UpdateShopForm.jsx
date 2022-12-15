@@ -2,6 +2,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, StepLabel, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import checkImage from "../../../setup/functions/checkImage.function";
 import shopService from "../../../setup/services/shop.service";
 
 const UpdateShopForm = ({shop}) => {
@@ -9,6 +10,7 @@ const UpdateShopForm = ({shop}) => {
     const [newLogo, setNewLogo] = useState(null)
     const [credentials, setCredentials] = useState({})
     const [error, setError] = useState(false)
+    const [errorImg, setErrorImg] = useState(false)
 
     const navigate = useNavigate()
 
@@ -20,10 +22,18 @@ const UpdateShopForm = ({shop}) => {
     const handleChange = (e) => {
         const { name, value } = e.target
         if (name === 'logoUrl') {
-            if(!e.target.files[0]) return;
-            const url = URL.createObjectURL(e.target.files[0])
-            setNewLogo(url)
-            setCredentials({...credentials, [name]: url});
+            checkImage(value, (result) => {
+                console.log(result);
+                if(result){
+                    setNewLogo(value)
+                    setErrorImg(false)
+                    setCredentials({...credentials, logoUrl: value})
+                }else{
+                    setErrorImg(true)
+                    console.log('error');
+                    return
+                }
+            } )
         }else{
             setCredentials({...credentials, [name]: value});
         }
@@ -51,13 +61,13 @@ const UpdateShopForm = ({shop}) => {
         event.preventDefault();
     };
     return ( 
-        <form onSubmit={handleSubmit}>
-            <Button href={`/shop/${shop._id}`} variant="contained">Retour</Button>
+        <form onSubmit={handleSubmit} className="shop-form">
             {shop &&
             <>
                 <StepLabel>Logo</StepLabel>
                 <img src={newLogo ? newLogo : credentials.logoUrl } alt="Logo boutique" style={{width: '250px', height: '250px', borderRadius: '250px' ,objectFit: 'cover'}}/>
-                <TextField name="logoUrl" id="logoUrl" type="file" variant="outlined" sx={{ width: '100%' }}  onInput={handleChange}/>
+                <TextField name="logoUrl" id="logoUrl" type="url" variant="outlined" value={credentials.logoUrl} label="Logo" sx={{ width: '100%' }}  onInput={handleChange}/>
+                {errorImg && <span className="error-fom" style={{width: "100%", color: 'red', fontWeight: 'bold'}}>L'image renseigné n'est pas valide</span>}
                 <TextField name="name" id="name" type="text" variant="outlined" value={credentials.name} label="Nom" sx={{ width: '100%' }}  onInput={handleChange}/>
                 <TextField name="email" id="email" autoComplete="email" type="email" variant="outlined" value={credentials.email} label="Email" sx={{ width: '100%' }}  onInput={handleChange}/>
                 <FormControl sx={{ width: '100%' }} variant="outlined">
@@ -86,8 +96,11 @@ const UpdateShopForm = ({shop}) => {
                     />
                 </FormControl>
                 <TextField name="address" id="address" type="text" variant="outlined" value={credentials.address} label="Adresse" sx={{ width: '100%' }}  onInput={handleChange}/>
-                <Button type="submit" variant="contained">Modifier la boutique</Button>
-                {error && <span className="error-fom">Une Erreur est survenue. Veuillez réessayer ultérieument</span>}
+                {errorImg 
+                ? <Button type="submit" variant="contained" sx={{width: '100%'}} disabled>Modifier la boutique</Button>
+                : <Button type="submit" variant="contained" sx={{width: '100%'}}>Modifier la boutique</Button>
+                }
+                {error && <span className="error-form" style={{color: 'red', fontWeight: 'bold', textAlign: 'center', width: "100%"}}>Une Erreur est survenue. Veuillez réessayer ultérieument</span>}
             </>
             }
         </form>

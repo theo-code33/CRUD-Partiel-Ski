@@ -1,6 +1,7 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, StepLabel, Switch, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import checkImage from "../../../setup/functions/checkImage.function";
 import postService from "../../../setup/services/post.service";
 
 const UpdatePostForm = ({post, shopID}) => {
@@ -18,6 +19,7 @@ const UpdatePostForm = ({post, shopID}) => {
         isAvailable: post.isAvailable,
     })
     const [error, setError] = useState(false)
+    const [errorImg, setErrorImg] = useState(false)
 
     const navigate = useNavigate()
 
@@ -27,10 +29,18 @@ const UpdatePostForm = ({post, shopID}) => {
     const handleChange = (e) => {
         const {name, value} = e.target;
         if (name === 'imgUrl') {
-            if(!e.target.files[0]) return;
-            const url = URL.createObjectURL(e.target.files[0])
-            setImagePost(url)
-            setCredentials({...credentials, [name]: url});
+            checkImage(value, (result) => {
+                console.log(result);
+                if(result){
+                    setImagePost(value)
+                    setErrorImg(false)
+                    setCredentials({...credentials, imgUrl: value})
+                }else{
+                    setErrorImg(true)
+                    console.log('error');
+                    return
+                }
+            } )
         }else{
             setCredentials({...credentials, [name]: value});
         }
@@ -55,13 +65,13 @@ const UpdatePostForm = ({post, shopID}) => {
         }
     }
     return ( 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="post-form">
             {post && 
             <>
                 <TextField name="title" id="title" type="text" variant="outlined" value={credentials.title} label="Titre" sx={{ width: '100%' }} required onInput={handleChange}/>
-                <StepLabel>Image</StepLabel>
                 <img src={imagePost ? imagePost : credentials.imgUrl} alt="preview" style={{width: '50%', height: '500px', objectFit: 'contain'}}/>
-                <TextField name="imgUrl" id="imgUrl" type="file" variant="outlined" sx={{ width: '100%' }} onInput={handleChange}/>
+                <TextField name="imgUrl" id="imgUrl" type="url" variant="outlined" label="Image" sx={{ width: '100%' }} onInput={handleChange}/>
+                {errorImg && <span className="error-fom" style={{width: "100%", color: 'red', fontWeight: 'bold'}}>L'image renseigné n'est pas valide</span>}
                 <TextField name="description" id="description" type="text" variant="outlined" value={credentials.description} label="Description" sx={{ width: '100%' }} required onInput={handleChange}/>
                 <TextField name="weight" id="weight" type="number" variant="outlined" value={credentials.weight} label="Poids" sx={{ width: '100%' }}  required onInput={handleChange}/>
                 <TextField name="size" id="size" type="number" variant="outlined" value={credentials.size} label="Taille" sx={{ width: '100%' }} required inputProps={{min: minSize, max: maxSize, step: 5}} onInput={handleChange}/>
@@ -77,10 +87,10 @@ const UpdatePostForm = ({post, shopID}) => {
                         sx={{ width: '100%' }}
                         onChange={handleChange}
                     >
-                        <MenuItem value="Freeride" selected={credentials.style == 'Freeride'}>Freeride</MenuItem>
-                        <MenuItem value="Freestyle" selected={credentials.style == 'Freestyle'}>Freestyle</MenuItem>
-                        <MenuItem value="Piste" selected={credentials.style == 'Piste'}>Piste</MenuItem>
-                        <MenuItem value="Polyvalant" selected={credentials.style == 'Polyvalant'}>Polyvalant</MenuItem>
+                        <MenuItem value="Freeride" selected={credentials.style === 'Freeride'}>Freeride</MenuItem>
+                        <MenuItem value="Freestyle" selected={credentials.style === 'Freestyle'}>Freestyle</MenuItem>
+                        <MenuItem value="Piste" selected={credentials.style === 'Piste'}>Piste</MenuItem>
+                        <MenuItem value="Polyvalant" selected={credentials.style === 'Polyvalant'}>Polyvalant</MenuItem>
                     </Select>
                 </FormControl>
                 <TextField name="address" id="address" type="text" variant="outlined" value={credentials.address} label="Adresse" sx={{ width: '100%' }} required onInput={handleChange}/>
@@ -97,12 +107,15 @@ const UpdatePostForm = ({post, shopID}) => {
                         sx={{ width: '100%' }}
                         onChange={handleChange}
                     >
-                        <MenuItem value={true} selected={credentials.isAvailable == true}>Disponible</MenuItem>
-                        <MenuItem value={false} selected={credentials.isAvailable == false}>Indisponible</MenuItem>
+                        <MenuItem value={true} selected={credentials.isAvailable === true}>Disponible</MenuItem>
+                        <MenuItem value={false} selected={credentials.isAvailable === false}>Indisponible</MenuItem>
                     </Select>
                     {credentials.isAvailable}
                 </FormControl>
-                <Button type="submit" variant="contained" sx={{mt: 2}}>Modifier</Button>
+                {errorImg 
+            ? <Button type="submit" variant="contained" sx={{mt: 2, width: '100%'}} disabled>Modifier</Button>
+            : <Button type="submit" variant="contained" sx={{mt: 2, width: '100%'}}>Modifier</Button>
+            }
                 {error && <span className="error-fom">Une Erreur est survenue. Veuillez réessayer ultérieument</span>}
             </>
             }
