@@ -1,16 +1,28 @@
-import { Button } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import { Box } from '@mui/system';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ActionsRow from './ActionsRow';
 const ShopPostListing = ({shopPosts, fetchShopData, shopID}) => {
+    const handleAvailable = (params) => {
+        console.log('params', params);
+        return params = !params
+    }
+    const severity = {
+        true: 'success',
+        false: 'error'
+    }
     const [columns, setColumns] = useState([
-        { field: '_id', headerName: 'ID', width: 100 },
+        { 
+            field: '_id', headerName: 'ID', width: 200,
+            renderCell: (params) => <Link to={`/post/${params.value}`}>{params.value}</Link>
+        },
         { 
             field: 'title', headerName: 'Titre', width: 130,
         },
         { 
-            field: 'description', headerName: 'Description', width: 300,
+            field: 'description', headerName: 'Description', width: 350,
         },
         {
             field:  'weight', headerName: 'Poids', width: 100,
@@ -29,7 +41,7 @@ const ShopPostListing = ({shopPosts, fetchShopData, shopID}) => {
         },
         {
             field:  'isAvailable', headerName: 'Disponible ?', width: 100,
-            valueGetter: (params) => `${params.value == true ? 'Oui' : 'Non'}`
+            renderCell: (params) => <Alert severity={severity[params.value]} icon={false}>{params.value ? 'OUI' : 'NON'}</Alert>
         },
         {
             field:  'bookings', headerName: 'Nb Réservations', width: 120,
