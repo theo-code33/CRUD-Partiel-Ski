@@ -70,6 +70,24 @@ const ShopController = {
         } catch (error) {
             res.status(400).send({message: error.message})
         }
+    },
+    getBookingsByShop: async (req, res) => {
+        const { id } = req.params
+        try {
+            const posts = await Post.find({shop: id})
+                                    .populate('bookings')
+            if (posts.length <= 0) return res.status(404).send(`Shop doesn't have post`)
+            let bookings = []
+            posts.forEach(post => {
+                    bookings.push(...post.bookings)
+            })
+            console.log('bookings => ', bookings);
+            if(bookings.length <= 0) return res.status(404).send(`Shop doesn't have booking`)
+            res.send(bookings)
+        }catch (error){
+            res.status(400).send({message: error.message})
+        }
+            
     }
 }
 
