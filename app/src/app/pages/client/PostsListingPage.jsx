@@ -3,7 +3,7 @@ import postService from "../../../setup/services/post.service"
 import PostItem from "../../components/post/PostItem"
 import MainLayout from "../../layout/MainLayout"
 
-const Posts = () => {
+const Posts = ({shopID}) => {
     const [posts, setPosts] = useState([])
     const [postsFiltered, setPostsFiltered] = useState([])
     const fetchPost = async () => {
@@ -21,7 +21,7 @@ const Posts = () => {
       setPostsFiltered([...posts])
     },[posts])
     return (
-      <MainLayout setPostsFiltered={setPostsFiltered} posts={posts}>
+      <MainLayout setPostsFiltered={setPostsFiltered} posts={posts} shopID={shopID}>
         <section>
             {
               postsFiltered.length > 0 
