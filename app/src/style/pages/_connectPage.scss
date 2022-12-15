@@ -1,0 +1,28 @@
+.connect-page{
+    width: 30%;
+    height: 75vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .form-connect{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 50px;
+
+        .error-connexion{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+}
