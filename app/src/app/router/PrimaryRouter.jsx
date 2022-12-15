@@ -16,8 +16,8 @@ const PrimaryRouter = () => {
     }, [])
     return (
         <Routes>
-            <Route path="/" element={<PostsListingPage />}/>
-            <Route path="/*" element={<PostsListingPage />}/>
+            <Route path="/" element={<PostsListingPage shopID={shopID}/>}/>
+            <Route path="/*" element={<PostsListingPage shopID={shopID} />}/>
             <Route path="/post/:id" element={<PostPage />}/>
             <Route path="/shop/connect" element={<ConnectPage setShopID={setShopID} />} />
             <Route path="/shop/*" element={<ConnectPage setShopID={setShopID} />} />
@@ -25,7 +25,7 @@ const PrimaryRouter = () => {
                 <>
                     <Route path={`/shop/${shopID}`} element={<ShopPage shopID={shopID} />} />
                     <Route path={`/shop/${shopID}/parametres`} element={<ParameterPage shopID={shopID} />} />
-                    <Route path='/post/update/:id' element={<UpdatePost />}/>
+                    <Route path='/post/update/:id' element={<UpdatePost shopID={shopID} />}/>
                     <Route path='/post/create' element={<CreatePostPage shopID={shopID} />}/>
                 </>
             )
