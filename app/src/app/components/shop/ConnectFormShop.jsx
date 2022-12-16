@@ -70,7 +70,9 @@ const ConnectFormShop = ({setShopID}) => {
             {error && 
                 <span className="error-connexion">Il y a une erreur. Veuillez vérifier que votre Email et votre Mot de Passe soient les bons</span>
             }
-            <Button type="submit" variant="contained">Connexion</Button>
+            <Button type="submit" variant="contained" sx={{width: '100%'}}>Connexion</Button>
+            <Button href="/shop/create" sx={{width: '100%'}}>Pas encore de boutique ? Créé en une maintenant !</Button>
+
         </form>
      );
 }
