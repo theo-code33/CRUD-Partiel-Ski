@@ -22,7 +22,6 @@ const PostPage = () => {
         let ratingTotal = 0
         commentRating.forEach((rating) => {
             ratingTotal += +rating
-            console.log(ratingTotal);
         })
         const rating = ratingTotal / commentRating.length
         return rating

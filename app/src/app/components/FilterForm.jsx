@@ -25,7 +25,7 @@ const FilterForm = ({setPostsFiltered, posts}) => {
                 }
             }
         }else{
-            result = value ? posts.filter((post) => post[name] == value) : posts;
+            result = value ? posts.filter((post) => post[name] === value) : posts;
         }
         setPostsFiltered(result)
     }

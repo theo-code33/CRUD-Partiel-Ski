@@ -5,10 +5,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ActionsRow from './ActionsRow';
 const ShopPostListing = ({shopPosts, fetchShopData, shopID}) => {
-    const handleAvailable = (params) => {
-        console.log('params', params);
-        return params = !params
-    }
     const severity = {
         true: 'success',
         false: 'error'

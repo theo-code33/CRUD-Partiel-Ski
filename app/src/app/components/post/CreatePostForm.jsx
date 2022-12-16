@@ -29,14 +29,12 @@ const CreatePostForm = ({shopID}) => {
         const {name, value} = e.target;
         if (name === 'imgUrl') {
             checkImage(value, (result) => {
-                console.log(result);
                 if(result){
                     setImagePost(value)
                     setErrorImg(false)
                     setCredentials({...credentials, imgUrl: value})
                 }else{
                     setErrorImg(true)
-                    console.log('error');
                     return
                 }
             } )
