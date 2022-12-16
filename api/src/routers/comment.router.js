@@ -5,7 +5,6 @@ const router = express.Router()
 const endPoint = '/comments'
 
 router.get(`${endPoint}`, CommentController.getAll)
-router.get(`${endPoint}/:id`, CommentController.getById)
 router.post(`${endPoint}`, CommentController.create)
 
 module.exports = router

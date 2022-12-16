@@ -12,17 +12,6 @@ const CommentController = {
             res.status(400).send({message: error.message})
         }
     },
-    getById: async (req, res) => {
-        const { id } = req.params
-        try {
-            const comment = await Comment.findById(id)
-                                            .populate('post')
-            if(!comment) return res.status(404).send(`Comment with id ${id} not found`)
-            res.send(comment)
-        } catch (error) {
-            res.status(400).send({message: error.message})
-        }
-    },
     create: async (req, res) => {
         const data = req.body
         const newComment = new Comment(data)

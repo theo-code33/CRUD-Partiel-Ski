@@ -4,8 +4,6 @@ const router = express.Router()
 
 const endPoint = '/bookings'
 
-router.get(`${endPoint}`, BookingController.getAll)
-router.get(`${endPoint}/:id`, BookingController.getById)
 router.post(`${endPoint}`, BookingController.create)
 
 
