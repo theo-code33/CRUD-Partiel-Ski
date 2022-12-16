@@ -23,14 +23,12 @@ const UpdateShopForm = ({shop}) => {
         const { name, value } = e.target
         if (name === 'logoUrl') {
             checkImage(value, (result) => {
-                console.log(result);
                 if(result){
                     setNewLogo(value)
                     setErrorImg(false)
                     setCredentials({...credentials, logoUrl: value})
                 }else{
                     setErrorImg(true)
-                    console.log('error');
                     return
                 }
             } )
@@ -52,6 +50,27 @@ const UpdateShopForm = ({shop}) => {
         } catch (error) {
             console.log(error);
             setError(true)
+        }
+    }
+
+    const handleDelete = async () => {
+        const confirm = window.confirm("Voulez-vous vraiment supprimer cette boutique ? Cette action est irréversible et supprimera toutes les annonces liées à cette boutique.")
+        if(confirm){
+            try {
+                const shopResponse = await shopService.remove(shop._id)
+                if (shopResponse.message) {
+                    setError(true)
+                }else{
+                    setCredentials({})
+                    window.localStorage.removeItem('shopID')
+                    navigate(`/`)
+                }
+            } catch (error) {
+                console.log(error);
+                setError(true)
+            }
+        }else{
+            return
         }
     }
 
@@ -101,6 +120,7 @@ const UpdateShopForm = ({shop}) => {
                 : <Button type="submit" variant="contained" sx={{width: '100%'}}>Modifier la boutique</Button>
                 }
                 {error && <span className="error-form" style={{color: 'red', fontWeight: 'bold', textAlign: 'center', width: "100%"}}>Une Erreur est survenue. Veuillez réessayer ultérieument</span>}
+                <Button className="delete-button" variant="contained" color="error" sx={{mt: 2, width: "100%"}} onClick={handleDelete}>Supprimer le compte</Button>
             </>
             }
         </form>
