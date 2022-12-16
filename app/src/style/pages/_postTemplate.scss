@@ -24,6 +24,14 @@
                 width: calc(100% - 100px);
                 margin: 30px auto;
 
+                &-top{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 20px;
+                    
+                }
+
                 .content-post{
                     h2{
                         font-size: 50px;
