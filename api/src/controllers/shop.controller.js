@@ -6,7 +6,7 @@ const Comment = require('../models/Comment.model')
 const bcrypt = require('bcrypt')
 
 const ShopController = {
-    getOne: async (req, res) => {
+    connect: async (req, res) => {
         const {email, password} = req.body
         try {
             const shop = await Shop.find({email: email})

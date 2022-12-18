@@ -4,7 +4,7 @@ const router = express.Router()
 
 const endPoint = '/shops'
 
-router.post(`${endPoint}/connect`, ShopController.getOne)
+router.post(`${endPoint}/connect`, ShopController.connect)
 router.get(`${endPoint}/:id`, ShopController.getById)
 router.get(`${endPoint}/:id/bookings`, ShopController.getBookingsByShop)
 router.post(`${endPoint}`, ShopController.create)
