@@ -2,14 +2,23 @@ const Shop = require('../models/Shop.model')
 const Post = require('../models/Post.model')
 const Booking = require('../models/Booking.model')
 const Comment = require('../models/Comment.model')
+// const createJWT = require('../middlewares/authJwt')
+const bcrypt = require('bcrypt')
 
 const ShopController = {
     getOne: async (req, res) => {
         const {email, password} = req.body
         try {
-            const shop = await Shop.find({email: email, password: password})
-            if(!shop) return res.status(404).send('Shop not found')
-            res.send(shop)
+            const shop = await Shop.find({email: email})
+            if(!shop){
+                return res.status(404).send('Shop not found')
+            }else{
+                console.log("password =>", password);
+                console.log("shop password =>", shop);
+                const passwordDecrypted = await bcrypt.compare(password, shop[0].password)
+                if(!passwordDecrypted) return res.status(400).send('Invalid credentials')
+                res.send(shop)
+            }
         } catch (error) {
             res.status(400).send({message: error.message})
         }
@@ -27,6 +36,9 @@ const ShopController = {
     },
     create: async (req, res) => {
         const newShop = new Shop(req.body)
+        newShop.email = newShop.email.toLowerCase()
+        const encryptedPassword = await bcrypt.hash(newShop.password, 10)
+        newShop.password = encryptedPassword
         try {
             await newShop.save()
             res.status(201).send(newShop)
@@ -37,6 +49,10 @@ const ShopController = {
     update: async (req, res) => {
         const { id } = req.params
         const updatedShop = req.body
+        if(updatedShop.password){
+            const encryptedPassword = await bcrypt.hash(updatedShop.password, 10)
+            updatedShop.password = encryptedPassword
+        } 
         try {
             const shop = await Shop.findByIdAndUpdate(id, updatedShop)
             if(!shop) return res.status(404).send(`Shop with id ${id} not found`)
